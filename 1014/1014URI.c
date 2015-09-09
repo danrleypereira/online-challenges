@@ -4,7 +4,7 @@
 int main(){
         double km, l, cm;
 
-        scanf("%lf%lf", &km, &l);
+        scanf("%lf %lf", &km, &l);
 	
 	cm = km/l;
 	printf("%.3lf km/l\n", cm);

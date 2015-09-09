@@ -18,7 +18,7 @@ int main(){
 	return 0;
 }
 
-counter(valueNota){
+int counter(int valueNota){
 	int value = valueInsert/valueNota;	
 	valueInsert = valueInsert % valueNota;
 
