@@ -1,28 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int EhTriangulo(int a, int b, int c);
-void TipoTriangulo(int a, int b, int c);
+int EhTriangulo(double A, double B, double C);
+void TipoTriangulo(double A, double B, double C);
+void ordenar_valores(double* A, double* B, double *C);
 int main()
 {
-	int a, b, c;
-	scanf("%d", &a);
-	scanf("%d", &b);
-	scanf("%d", &c);
-	if(EhTriangulo(a, b, c))
+	double A, B, C;
+    do{
+	    scanf("%lf", &A);
+    }while(A<0);
+    do{
+	    scanf("%lf", &B);
+    }while(B<0);
+    do{
+	    scanf("%lf", &C);
+    }while(C<0);
+    ordenar_valores(&A, &B, &C);
+	if(EhTriangulo(A, B, C))
 	{
-		TipoTriangulo(a, b, c);
+		TipoTriangulo(A, B, C);
 	}
 	
 	return 0;
 }
 
-int EhTriangulo(int a, int b, int c)
+int EhTriangulo(double A, double B, double C)
 {
-	int ab = a < b ? -1 : 1;
-	int ac = a < c ? -1 : 1;
-	int bc = b < c ? -1 : 1;
-	if(((bc*(b-c))<a && a<(b+c)) && ((ac*(a-c))<b && b<(a+c)) && ((ab*(a-b))<c && c<(a+b)))
+	int AB = A < B ? -1 : 1;
+	int AC = A < C ? -1 : 1;
+	int BC = B < C ? -1 : 1;
+	if(((BC*(B-C))<A && A<(B+C)) && ((AC*(A-C))<B && B<(A+C)) && ((AB*(A-B))<C && C<(A+B)))
 	{
 		return 1;
 	}else
@@ -32,55 +40,43 @@ int EhTriangulo(int a, int b, int c)
 	}
 }
 
-int compare (const void *a, const void *b)
+int compare (const void *A, const void *B)
 {
-      const int *ia = (const int *)a; // casting pointer types 
-          const int *ib = (const int *)b;
-              return *ia  - *ib; 
+      const double *iA = (const double *)A; // casting pointer types 
+          const double *iB = (const double *)B;
+              return *iA  - *iB; 
 }
 
-void ordenar_valores(int* a, int* b, int* c)
+void ordenar_valores(double* A, double* B, double* C)
 {
-	int array[3] = {*a, *b, *c};
+	double array[3] = {*A, *B, *C};
 	int i;
-	printf("antes do qsort\n");
-	for(i=0; i<3; i++)
-	{
-		printf("%d ", array[i]);
-	}
-	qsort(array, 3, sizeof(int), compare);
-	printf("\ndepois do qsort\n");
-	for(i=0; i<3; i++)
-	{
-		printf("%d ", array[i]);
-	}
+	qsort(array, 3, sizeof(double), compare);
 	printf("\n");
-	*a = array[2];
-	*b = array[1];
-	*c = array[0];
+	*A = array[2];
+	*B = array[1];
+	*C = array[0];
 }
 
-void TipoTriangulo(int a, int b, int c)
+void TipoTriangulo(double A, double B, double C)
 {
-	ordenar_valores(&a, &b, &c);
-	printf("\na= %d b= %d c= %d\n", a, b, c);
-	if( (a*a) < ((b*b)+(c*c)) )
-	{
-		printf("TRIANGULO ACUTANGULO\n");
-	}
-	if( (a*a) > ((b*b)+(c*c)) )
-	{
-		printf("TRIANGULO OBTUSANGULO\n");
-	}
-	if( (a*a) == ((b*b)+(c*c)) )
+	if( (A*A) == ((B*B)+(C*C)) )
 	{
 		printf("TRIANGULO RETANGULO\n");
 	}
-	if((a==b) && (a==c) && (b==c))
+	if( (A*A) > ((B*B)+(C*C)) )
+	{
+		printf("TRIANGULO OBTUSANGULO\n");
+	}
+	if( (A*A) < ((B*B)+(C*C)) )
+	{
+		printf("TRIANGULO ACUTANGULO\n");
+	}
+	if((A==B) && (A==C) && (B==C))
 	{
 		printf("TRIANGULO EQUILATERO\n");
 	}
-	if( ((a==b) && (b!=c)) || ((a==c) && (a!=b)) || ((b==c) && (b!=a)) )
+	if( ((A==B) && (B!=C)) || ((A==C) && (A!=B)) || ((B==C) && (B!=A)) )
 	{
 		printf("TRIANGULO ISOSCELES\n");
 	}
