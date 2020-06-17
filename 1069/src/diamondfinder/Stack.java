@@ -41,6 +41,26 @@ public class Stack {
 		return false;
 	}
 	
+	public boolean hasOnlyOne() {
+		if(stack.size() == 1)
+			return true;
+		return false;
+	}
+	
+	public boolean hasDiamonds() {
+		if(this.hasItem()) {
+			try {
+				for(int i=0; i< stack.size(); i++) {
+					if( ( stack.get(i) == '<' ) && ( stack.get(i+1) == '>' ) )
+						return true;
+				}
+			} catch(IndexOutOfBoundsException e) {
+				return false;
+			}
+		}
+		return false;
+	}
+	
 	public int lenght() {
 		return stack.size();
 	}
