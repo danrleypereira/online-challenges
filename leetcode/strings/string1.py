@@ -24,6 +24,8 @@ class Queue:
 
 
 class Solution:
+    # Runtime: 99 ms, faster than 49.22%
+    # Memory Usage: 14.1 MB, less than 78.03%
     def lengthOfLongestSubstring(self, s: str) -> int:
         queue = Queue()
         longest_substring_length = 0
@@ -51,6 +53,22 @@ class Solution:
         longest_substring_length = longest_substring_length if longest_substring_length > queue.get_length(
         ) else queue.get_length()
         return longest_substring_length
+
+    # Runtime: 64 ms
+    def bestSolution(self, s: str) -> int:
+
+        left = 0
+        len = 0
+        d = {}
+
+        for right, char in enumerate(s):
+            if char in d:
+                left = max(left, d[char]+1)
+
+            d[char] = right
+            len = max(len, right-left+1)
+
+        return(len)
 
 
 def test_assert():
