@@ -1,6 +1,6 @@
 # Online Challenges
 WithGoogle, LeetCode, URI solutions all in one place.
-Here you can find how to build up and run the solutions using python, c, java and go.
+Here you can find how to build up and run the solutions using Python3, C, Java and Go.
 
 
 ## Python3
