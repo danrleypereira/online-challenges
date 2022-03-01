@@ -10,6 +10,13 @@ local.properties
 .loadpath
 .recommenders
 
+# venv - virtualenv python
+lib
+lib64
+pyvenv.cfg
+share/
+*__pycache__*
+
 # External tool builders
 .externalToolBuilders/
 
