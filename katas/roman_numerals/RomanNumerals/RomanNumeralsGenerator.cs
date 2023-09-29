@@ -1,43 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace RomanNumerals
 {
     public static class RomanNumeralsGenerator
     {
-        private static readonly Dictionary<int, string> RomanMapping = new Dictionary<int, string>
+        private static readonly Dictionary<string, int> RomanMapping = new Dictionary<string, int>
         {
-            {1000, "M"},
-            {900, "CM"},
-            {500, "D"},
-            {400, "CD"},
-            {100, "C"},
-            {90, "XC"},
-            {50, "L"},
-            {40, "XL"},
-            {10, "X"},
-            {9, "IX"},
-            {5, "V"},
-            {4, "IV"},
-            {1, "I"}
+            {"M", 1000},
+            {"CM", 900},
+            {"D", 500},
+            {"CD", 400},
+            {"C", 100},
+            {"XC", 90},
+            {"L", 50},
+            {"XL", 40},
+            {"X", 10},
+            {"IX", 9},
+            {"V", 5},
+            {"IV", 4},
+            {"I", 1}
         };
         public static string DecimalToRomanNumeralsParser(int number)
         {
-            int amount_left_to_add_into_roman_number = number;
-            string roman_number = "";
-            while(amount_left_to_add_into_roman_number > 0)
+            int remainingAmount = number;
+            StringBuilder romanNumber = new StringBuilder();
+            foreach(var item in RomanMapping)
             {
-                foreach (var item in RomanMapping)
+                if(remainingAmount >= item.Value)
                 {
-                    while(amount_left_to_add_into_roman_number >= item.Key)
-                        if(amount_left_to_add_into_roman_number >= item.Key)
-                        {
-                            roman_number += item.Value;
-                            amount_left_to_add_into_roman_number -= item.Key;
-                        }
+                    int timesItemValueFits = remainingAmount / item.Value;
+                    for(int i=0; i < timesItemValueFits; i++)
+                        romanNumber.Append(item.Key);
+                    remainingAmount -= item.Value * timesItemValueFits;
                 }
             }
-            return roman_number;
+            return romanNumber.ToString();
         }
     }
 }
