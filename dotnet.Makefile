@@ -1,12 +1,17 @@
-SOLUTION_NAME = RomanNumerals
-TEST_PROJECT = RomanNumeralsTest
-LIB_PROJECT = RomanNumerals
+SOLUTION_NAME = TicTacToe
+TEST_PROJECT = TicTacToeTest
+LIB_PROJECT = TicTacToe
+TEST_NAME = 
 
 build:
 	dotnet build $(SOLUTION_NAME).sln
 
 test:
-	dotnet test $(TEST_PROJECT)/$(TEST_PROJECT).csproj
+	@if [ -z "$(TEST_NAME)" ]; then \
+		dotnet test $(TEST_PROJECT)/$(TEST_PROJECT).csproj; \
+	else \
+		dotnet test $(TEST_PROJECT)/$(TEST_PROJECT).csproj --filter "FullyQualifiedName~$(TEST_PROJECT).$(TEST_NAME)"; \
+	fi
 
 clean:
 	dotnet clean $(SOLUTION_NAME).sln
