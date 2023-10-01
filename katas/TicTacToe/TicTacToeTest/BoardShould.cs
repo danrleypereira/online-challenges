@@ -17,13 +17,17 @@ public class BoardShould
 
         var board2 = new Board();
         board2.NextPlayerChose(1, 0);
+        board2.NextPlayerChose(2, 0);
         board2.NextPlayerChose(1, 1);
+        board2.NextPlayerChose(0, 0);
         board2.NextPlayerChose(1, 2);
         yield return new object[] { board2 };
 
         var board3 = new Board();
         board3.NextPlayerChose(2, 0);
+        board3.NextPlayerChose(1, 0);
         board3.NextPlayerChose(2, 1);
+        board3.NextPlayerChose(1, 1);
         board3.NextPlayerChose(2, 2);
         yield return new object[] { board3 };
     }
@@ -73,6 +77,33 @@ public class BoardShould
         board2.NextPlayerChose(2, 2); // O (Winner with diagonal from top-right to bottom-left)
         yield return new object[] { board2 };
     }
+    public static IEnumerable<object[]> ColumnWinnersData()
+    {
+        var board1 = new Board();
+        board1.NextPlayerChose(0, 0);
+        board1.NextPlayerChose(1, 1);
+        board1.NextPlayerChose(1, 0);
+        board1.NextPlayerChose(1, 2);
+        board1.NextPlayerChose(2, 0);
+        yield return new object[] { board1 };
+
+        var board2 = new Board();
+        board2.NextPlayerChose(0, 0);
+        board2.NextPlayerChose(0, 1);
+        board2.NextPlayerChose(1, 0);
+        board2.NextPlayerChose(1, 1);
+        board2.NextPlayerChose(1, 2);
+        board2.NextPlayerChose(2, 1);
+        yield return new object[] { board2 };
+
+        var board3 = new Board();
+        board3.NextPlayerChose(2, 2);
+        board3.NextPlayerChose(2, 1);
+        board3.NextPlayerChose(1, 2);
+        board3.NextPlayerChose(0, 1);
+        board3.NextPlayerChose(0, 2);
+        yield return new object[] { board3 };
+    }
 
 
     [Fact]
@@ -88,7 +119,7 @@ public class BoardShould
     }
     [Theory]
     [MemberData(nameof(RowWinnersData))]
-    public void RowsAreTakenByTheSamePlayer(Board board)
+    public void RowWins(Board board)
     {
         Assert.True(board.IsThereARowWinner());
     }
@@ -96,7 +127,7 @@ public class BoardShould
     [MemberData(nameof(NoWinnersData))]
     public void GameOverWithoutWinner(Board board)
     {
-        Assert.True(board.isGameOver());
+        Assert.True(board.IsGameOver());
     }
     [Theory]
     [MemberData(nameof(NoWinnersData))]
@@ -109,6 +140,12 @@ public class BoardShould
     public void DiagonalWins(Board board)
     {
         Assert.True(board.IsThereADiagonalWinner());
+    }
+    [Theory]
+    [MemberData(nameof(ColumnWinnersData))]
+    public void ColumnWins(Board board)
+    {
+        Assert.True(board.IsThereAWinnerColumn());
     }
 
 }

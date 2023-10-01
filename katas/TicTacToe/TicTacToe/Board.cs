@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
+﻿
 namespace TicTacToe
 {
     public class Board
@@ -25,22 +22,35 @@ namespace TicTacToe
         {
             for(int i = 0; i < 3; i++)
             {
-                bool rowTakenBy = true;
-                rowTakenBy = rowTakenBy && board[i, 0] == board[i, 1];
-                rowTakenBy = rowTakenBy && board[i, 0] == board[i, 2];
+                if(board[i, 0] == '\0') 
+                    continue;
+                bool rowTakenBy = board[i, 0] == board[i, 1] && board[i, 0] == board[i, 2];
                 if(rowTakenBy) return true;
+            }
+            return false;
+        }
+        public bool IsThereAWinnerColumn()
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                if(board[0, i] == '\0') 
+                    continue;
+                bool columnTakenBy = board[0, i] == board[1, i] && board[0, i] == board[2, i];
+                if(columnTakenBy) return true;
             }
             return false;
         }
         public bool IsThereADiagonalWinner()
         {
-            if( board[0, 0] == board[1, 1] && board[0, 0] == board[2, 2] )
-                return true;
-            if(board[0, 2] == board[1, 1] && board[1, 1] == board[2, 0])
-                return true;
+            if(board[0, 0] != '\0')
+                if( board[0, 0] == board[1, 1] && board[0, 0] == board[2, 2] )
+                    return true;
+            if(board[0, 2] != '\0')
+                if(board[0, 2] == board[1, 1] && board[1, 1] == board[2, 0])
+                    return true;
             return false;
         }
-        public bool isGameOver()
+        public bool IsGameOver()
         {
             bool remainsFieldsEmpty = true;
             for(int i = 0; i < 3; i++)
