@@ -1,34 +1,40 @@
 using TicTacToe;
 
 namespace TicTacToeTest;
-
 public class BoardShould
 {
+    private static Board GenerateBoardWithRowWinner(int row)
+    {
+        var board = new Board();
+        for(int i = 0; i < 3; i++)
+        {
+            board.NextPlayerChose(row, i);
+            board.NextPlayerChose((row + 1) % 3, i);
+        }
+        return board;
+    }
     public static IEnumerable<object[]> RowWinnersData()
     {
-        var board1 = new Board();
-        board1.NextPlayerChose(0, 0);
-        board1.NextPlayerChose(1, 0);
-        board1.NextPlayerChose(0, 1);
-        board1.NextPlayerChose(1, 1);
-        board1.NextPlayerChose(0, 2);
-        yield return new object[] { board1 };
+        yield return new object[] { GenerateBoardWithRowWinner(0) };
+        yield return new object[] { GenerateBoardWithRowWinner(1) };
+        yield return new object[] { GenerateBoardWithRowWinner(2) };
+    }
 
-        var board2 = new Board();
-        board2.NextPlayerChose(1, 0);
-        board2.NextPlayerChose(2, 0);
-        board2.NextPlayerChose(1, 1);
-        board2.NextPlayerChose(0, 0);
-        board2.NextPlayerChose(1, 2);
-        yield return new object[] { board2 };
-
-        var board3 = new Board();
-        board3.NextPlayerChose(2, 0);
-        board3.NextPlayerChose(1, 0);
-        board3.NextPlayerChose(2, 1);
-        board3.NextPlayerChose(1, 1);
-        board3.NextPlayerChose(2, 2);
-        yield return new object[] { board3 };
+    private static Board GenerateBoardWithColumnWinner(int column)
+    {
+        var board = new Board();
+        for(int i = 0; i < 3; i++)
+        {
+            board.NextPlayerChose(i, column);
+            board.NextPlayerChose(i, (column + 1) % 3);
+        }
+        return board;
+    }
+    public static IEnumerable<object[]> ColumnWinnersData()
+    {
+        yield return new object[] { GenerateBoardWithColumnWinner(0) };
+        yield return new object[] { GenerateBoardWithColumnWinner(1) };
+        yield return new object[] { GenerateBoardWithColumnWinner(2) };
     }
 
     public static IEnumerable<object[]> NoWinnersData()
@@ -76,7 +82,7 @@ public class BoardShould
         board2.NextPlayerChose(2, 2); // O (Winner with diagonal from top-right to bottom-left)
         yield return new object[] { board2 };
     }
-    public static IEnumerable<object[]> EmptiesData()
+    public static IEnumerable<object[]> FalseWinWithEmptiesData()
     {
         //second row empty
         var rowEmpty = new Board();
@@ -104,34 +110,6 @@ public class BoardShould
         diagonalEmpty.NextPlayerChose(1, 2);
         yield return new object[] { diagonalEmpty };
     }
-    public static IEnumerable<object[]> ColumnWinnersData()
-    {
-        var board1 = new Board();
-        board1.NextPlayerChose(0, 0);
-        board1.NextPlayerChose(1, 1);
-        board1.NextPlayerChose(1, 0);
-        board1.NextPlayerChose(1, 2);
-        board1.NextPlayerChose(2, 0);
-        yield return new object[] { board1 };
-
-        var board2 = new Board();
-        board2.NextPlayerChose(0, 0);
-        board2.NextPlayerChose(0, 1);
-        board2.NextPlayerChose(1, 0);
-        board2.NextPlayerChose(1, 1);
-        board2.NextPlayerChose(1, 2);
-        board2.NextPlayerChose(2, 1);
-        yield return new object[] { board2 };
-
-        var board3 = new Board();
-        board3.NextPlayerChose(2, 2);
-        board3.NextPlayerChose(2, 1);
-        board3.NextPlayerChose(1, 2);
-        board3.NextPlayerChose(0, 1);
-        board3.NextPlayerChose(0, 2);
-        yield return new object[] { board3 };
-    }
-
 
     [Fact]
     public void Should_Insert_Correct_Symbol_Of_Player()
@@ -175,7 +153,7 @@ public class BoardShould
         Assert.True(board.IsThereWinner());
     }
     [Theory]
-    [MemberData(nameof(EmptiesData))]
+    [MemberData(nameof(FalseWinWithEmptiesData))]
     public void Should_Not_Detect_Empties_As_A_Winner(Board board)
     {
         Assert.False(board.IsThereWinner());
