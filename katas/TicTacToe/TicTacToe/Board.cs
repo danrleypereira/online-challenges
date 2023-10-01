@@ -14,6 +14,7 @@ namespace TicTacToe
         }
         public void NextPlayerChose(int row, int column)
         {
+            if(this.board[row, column] != '\0') throw new FieldAlreadyTakenException();
             this.board[row, column] = numberOfTurns++%2 == 0 ? 'X' : 'O';
         }
         public char GetPosition(int row, int column)

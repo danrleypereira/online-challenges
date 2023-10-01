@@ -99,6 +99,12 @@ public class BoardShould
         Assert.True(board.isGameOver());
     }
     [Theory]
+    [MemberData(nameof(NoWinnersData))]
+    public void InsertionInAlreadyTakenField(Board board)
+    {
+        Assert.Throws<FieldAlreadyTakenException>(() => board.NextPlayerChose(1,2));
+    }
+    [Theory]
     [MemberData(nameof(DiagonalWinnersData))]
     public void DiagonalWins(Board board)
     {
