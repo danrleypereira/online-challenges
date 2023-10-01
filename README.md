@@ -20,3 +20,29 @@ deactivate
 
 ### install requirements
 python3 -m pip install -r requirements
+
+## .NET
+### testing
+dotnet test
+### setting solution to start katas and challenges
+#### creates a sln with directory name
+dotnet new sln 
+
+#### check sdk versions
+dotnet sdk check
+
+#### create new project
+dotnet new classlib --framework "netstandard2.0" --output RomanNumerals
+
+#### add project to solution
+dotnet sln roman_numerals.sln add RomanNumerals/RomanNumerals.csproj
+#### create and add test project to the solution
+dotnet new xunit --framework "net7.0" --output RomanNumeralsTest
+dotnet sln roman_numerals.sln add RomanNumeralsTest/RomanNumeralsTest.csproj
+
+#### Adding references and packages
+- package
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add ToDo.csproj package Microsoft.Azure.DocumentDB.Core -v 1.0.0
+- adds project-to-project (P2P) references
+dotnet add RomanNumeralsTest/RomanNumeralsTest.csproj reference RomanNumerals/RomanNumerals.csproj
