@@ -19,11 +19,14 @@ python3 -m venv .
 deactivate
 
 ### install requirements
-python3 -m pip install -r requirements
+python3 -m pip install -r requirements.txt
 
 ## .NET
 ### testing
 dotnet test
+#### run specific classes or methods
+dotnet test --filter "FullyQualifiedName=Namespace.ClassName.MethodName"
+dotnet test --filter "FullyQualifiedName~Namespace.Class"
 ### setting solution to start katas and challenges
 #### creates a sln with directory name
 dotnet new sln 
